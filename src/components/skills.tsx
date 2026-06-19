@@ -1,8 +1,6 @@
 import bg from "../assets/bg 1.png";
 import Nav from "./nav";
 
-// ── SKILL LOGO IMPORTS ──
-// Programming & Web Development
 import html5Icon    from "../assets/skills/html5.png";
 import css3Icon     from "../assets/skills/css3.png";
 import tailwindIcon from "../assets/skills/tailwind.png";
@@ -13,41 +11,33 @@ import rnIcon       from "../assets/skills/react-native.png";
 import pythonIcon   from "../assets/skills/python.png";
 import djangoIcon   from "../assets/skills/django.png";
 import javaIcon     from "../assets/skills/java.png";
-
-// Database Management
+import wpIcon       from "../assets/skills/wordpress.png";
 import postgresIcon from "../assets/skills/postgre.png";
 import mysqlIcon    from "../assets/skills/mysql.png";
-
-// Development Tools & Version Control
 import gitIcon      from "../assets/skills/git.png";
 import githubIcon   from "../assets/skills/github.png";
 import gitbashIcon  from "../assets/skills/gitbash.png";
 import vscodeIcon   from "../assets/skills/vscode.png";
-
-// Multimedia & Design Tools
 import canvaIcon    from "../assets/skills/canva.png";
 import capcutIcon   from "../assets/skills/capcut.png";
-import wpIcon       from "../assets/skills/wordpress.png";
+import figmaIcon    from "../assets/skills/figma.png";
 import premiereIcon from "../assets/skills/premiere.png";
-import figma from "../assets/skills/figma.png";
 
-
-// ── SKILL DATA ──
 const sections = [
   {
     title: "Programming & Web Development",
     skills: [
-      { label: "HTML5",       icon: html5Icon },
-      { label: "CSS3",        icon: css3Icon },
-      { label: "Tailwind",    icon: tailwindIcon },
-      { label: "TypeScript",  icon: tsIcon },
-      { label: "JavaScript",  icon: jsIcon },
-      { label: "React",       icon: reactIcon },
-      { label: "React-Native",icon: rnIcon },
-      { label: "Python",      icon: pythonIcon },
-      { label: "Django",      icon: djangoIcon },
-      { label: "Java",        icon: javaIcon },
-      { label: "WordPress",   icon: wpIcon },
+      { label: "HTML5",        icon: html5Icon },
+      { label: "CSS3",         icon: css3Icon },
+      { label: "Tailwind",     icon: tailwindIcon },
+      { label: "TypeScript",   icon: tsIcon },
+      { label: "JavaScript",   icon: jsIcon },
+      { label: "React",        icon: reactIcon },
+      { label: "React-Native", icon: rnIcon },
+      { label: "Python",       icon: pythonIcon },
+      { label: "Django",       icon: djangoIcon },
+      { label: "Java",         icon: javaIcon },
+      { label: "WordPress",    icon: wpIcon },
     ],
   },
   {
@@ -60,19 +50,19 @@ const sections = [
   {
     title: "Development Tools & Version Control",
     skills: [
-      { label: "Git",               icon: gitIcon },
-      { label: "GitHub",            icon: githubIcon },
-      { label: "Git Bash",          icon: gitbashIcon },
-      { label: "Visual Studio Code",icon: vscodeIcon },
+      { label: "Git",                icon: gitIcon },
+      { label: "GitHub",             icon: githubIcon },
+      { label: "Git Bash",           icon: gitbashIcon },
+      { label: "Visual Studio Code", icon: vscodeIcon },
     ],
   },
   {
     title: "Multimedia & Design Tools",
     skills: [
-      { label: "Canva",             icon: canvaIcon },
-      { label: "CapCut",            icon: capcutIcon },
-      { label: "Figma",             icon: figma },
-      { label: "Adobe Premiere Pro",icon: premiereIcon },
+      { label: "Canva",              icon: canvaIcon },
+      { label: "CapCut",             icon: capcutIcon },
+      { label: "Figma",              icon: figmaIcon },
+      { label: "Adobe Premiere Pro", icon: premiereIcon },
     ],
   },
 ];
@@ -93,19 +83,29 @@ const Skills = () => (
 
     <Nav />
 
+    {/* Desktop: 2x2 grid */}
     <div style={{ position: "relative", zIndex: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0", height: "calc(100vh - 100px)", padding: "0 80px" }} className="skills-grid">
-
       {sections.map((section, i) => (
         <div key={i} style={{ padding: "40px 40px 32px", borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none", borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", gap: "28px" }}>
-
           <h3 style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "15px", color: "#fff", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
             {section.title}
           </h3>
-
           <div style={{ display: "flex", flexWrap: "wrap", gap: "28px 40px", alignItems: "flex-start" }}>
-            {section.skills.map((s) => (
-              <SkillItem key={s.label} label={s.label} icon={s.icon} />
-            ))}
+            {section.skills.map((s) => <SkillItem key={s.label} label={s.label} icon={s.icon} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Mobile: single column, scrollable, centered */}
+    <div style={{ display: "none", position: "relative", zIndex: 10, flexDirection: "column", alignItems: "center", gap: "0", height: "calc(100vh - 80px)", overflowY: "auto", padding: "16px 24px 40px" }} className="skills-mobile">
+      {sections.map((section, i) => (
+        <div key={i} style={{ width: "100%", maxWidth: "400px", padding: "24px 0", borderBottom: i < sections.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
+          <h3 style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "14px", color: "#fff", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, textAlign: "center" }}>
+            {section.title}
+          </h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "20px 28px", justifyContent: "center" }}>
+            {section.skills.map((s) => <SkillItem key={s.label} label={s.label} icon={s.icon} />)}
           </div>
         </div>
       ))}
@@ -113,7 +113,8 @@ const Skills = () => (
 
     <style>{`
       @media (max-width: 768px) {
-        .skills-grid { grid-template-columns: 1fr !important; padding: 0 28px !important; height: auto !important; overflow-y: auto !important; }
+        .skills-grid   { display: none !important; }
+        .skills-mobile { display: flex !important; }
       }
       @media (max-width: 1200px) and (min-width: 769px) {
         .skills-grid { padding: 0 40px !important; }

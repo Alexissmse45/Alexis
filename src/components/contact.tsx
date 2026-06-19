@@ -1,233 +1,187 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Download, ArrowLeft, ArrowRight } from "lucide-react";
 import bg from "../assets/bg 1.png";
-import logo from "../assets/mylogo.png";
+import profileImage from "../assets/img-contact.png";
+import Nav from "./nav";
 
 import Celerity from "../assets/project/celerity.png";
-import Celerity2 from "../assets/project/celerity2.png";
-import Celerity3 from "../assets/project/celerity3.png";
-import Celerity4 from "../assets/project/celerity4.png";
-import Kinetiq from "../assets/project/kinetiq.png";
-import Kinetiq2 from "../assets/project/kinetiq1.png";
-import Kinetiq3 from "../assets/project/kinetiq2.png";
+import Kinetiq from "../assets/project/kinetiq1.png";
+import Thesis from "../assets/project/thesis.png";
 
-const projectDetails: Record<number, {
-  title: string; description: string; images: string[];
-  techStack: string[]; role: string; highlights: string[];
-  liveUrl?: string; githubUrl?: string;
-}> = {
-  1: {
-    title: "Full-Stack Celerity Compiler",
-    description: "Celerity is a C-inspired programming language designed to simplify core programming concepts while maintaining the efficiency and structured approach of traditional compiled languages. This project is a full-stack web-based compiler that allows users to write, analyze, and execute Celerity code through an intuitive interface. It features lexical, syntax, and semantic analysis, along with intermediate code generation, providing a complete compiler workflow for learning and experimentation.",
-    images: [Celerity, Celerity2, Celerity3, Celerity4],
-    techStack: ["React", "TypeScript", "Python", "Flask"],
-    role: "Full Stack Developer",
-    highlights: [
-      "Built an interactive web-based code editor with real-time compilation feedback.",
-      "Developed a complete compiler pipeline including lexical, syntax, and semantic analysis.",
-      "Deployed on Vercel / Railway",
-    ],
-    liveUrl: "", githubUrl: "",
-  },
-  2: {
-    title: "Kinetiq E-commerce Platform",
-    description: "project description",
-    images: [Kinetiq, Kinetiq2, Kinetiq3],
-    techStack: ["React", "Firebase"],
-    role: "Database Manager",
-    highlights: ["Feature 1", "Feature 2", "Feature 3"],
-    liveUrl: "", githubUrl: "",
-  },
-  3: { title: "PROJECT TITLE 3", description: "project description", images: [], techStack: ["Python", "Flask"], role: "Backend Developer", highlights: ["Feature 1", "Feature 2", "Feature 3"], liveUrl: "", githubUrl: "" },
-  4: { title: "PROJECT TITLE 4", description: "project description", images: [], techStack: ["React Native", "Expo"], role: "Mobile Developer", highlights: ["Feature 1", "Feature 2", "Feature 3"], liveUrl: "", githubUrl: "" },
-  5: { title: "PROJECT TITLE 5", description: "project description", images: [], techStack: ["Ruby on Rails", "MySQL"], role: "Full Stack Developer", highlights: ["Feature 1", "Feature 2", "Feature 3"], liveUrl: "", githubUrl: "" },
+const carouselImages: string[] = [Celerity, Kinetiq, Thesis];
+
+const contactInfo = {
+  email1:    "alexistolin60@gmail.com",
+  email2:    "alexissmse45@gmail.com",
+  location:  "Tondo, Manila, Philippines",
+  github:    "https://github.com/Alexissmse45",
+  linkedin:  "https://www.linkedin.com/in/alexis-tolin-a3946337/",
+  jobstreet: "https://ph.jobstreet.com/profiles/alexisreginald-tolin-4eZmJjwMHy",
 };
 
-const ProjectView = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const project = projectDetails[Number(id)];
+const Contact = () => {
   const [current, setCurrent] = useState(0);
-  const [lightbox, setLightbox] = useState(false);
+  const [dlHovered, setDlHovered] = useState(false);
 
-  // Close lightbox on Escape key
+  const handleDownload = () => window.open("Tolin-Resume.pdf", "_blank");
+  const prev = () => setCurrent((c) => (c - 1 + carouselImages.length) % carouselImages.length);
+  const next = () => setCurrent((c) => (c + 1) % carouselImages.length);
+
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(false); };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    if (carouselImages.length < 2) return;
+    const t = setInterval(next, 3000);
+    return () => clearInterval(t);
   }, []);
 
-  if (!project) return (
-    <div style={{ color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", fontFamily: "'Archivo Narrow', sans-serif", fontSize: "18px" }}>
-      Project not found.
+  const CarouselBox = ({ height }: { height: string }) => (
+    <div style={{ position: "relative", width: "100%", height, backgroundColor: "rgba(210,210,210,0.2)", borderRadius: "4px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      {carouselImages.length > 0 ? (
+        <>
+          <img src={carouselImages[current]} alt={`work ${current + 1}`} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          {carouselImages.length > 1 && (
+            <>
+              <button onClick={prev} style={{ position: "absolute", left: "10px", background: "rgba(0,0,0,0.5)", border: "none", color: "#fff", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowLeft size={14} /></button>
+              <button onClick={next} style={{ position: "absolute", right: "10px", background: "rgba(0,0,0,0.5)", border: "none", color: "#fff", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowRight size={14} /></button>
+              <div style={{ position: "absolute", bottom: "8px", display: "flex", gap: "6px" }}>
+                {carouselImages.map((_, i) => (
+                  <div key={i} onClick={() => setCurrent(i)} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i === current ? "#fff" : "rgba(255,255,255,0.4)", cursor: "pointer" }} />
+                ))}
+              </div>
+            </>
+          )}
+        </>
+      ) : (
+        <span style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          Carousel images of your works
+        </span>
+      )}
     </div>
   );
 
-  const images = project.images;
-  const hasMany = images.length > 1;
-  const prev = () => setCurrent((c) => (c - 1 + images.length) % images.length);
-  const next = () => setCurrent((c) => (c + 1) % images.length);
-
   return (
-    <section style={{ position: "relative", minHeight: "100vh", backgroundImage: `url(${bg})`, backgroundSize: "cover", backgroundPosition: "center", overflow: "hidden" }}>
+    <section style={{ position: "relative", height: "100vh", backgroundImage: `url(${bg})`, backgroundSize: "cover", backgroundPosition: "center", overflow: "hidden" }}>
 
-      <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0,0,0,0.6)" }} />
+      <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0,0,0,0.55)" }} />
 
-      {/* Lightbox */}
-      {lightbox && images.length > 0 && (
-        <div
-          onClick={() => setLightbox(false)}
-          style={{ position: "fixed", inset: 0, zIndex: 100, backgroundColor: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Nav />
 
-          {/* Close button */}
-          <button onClick={() => setLightbox(false)}
-            style={{ position: "absolute", top: "20px", right: "24px", background: "none", border: "none", color: "#fff", cursor: "pointer", zIndex: 101 }}>
-            <X size={32} />
-          </button>
-
-          {/* Prev arrow */}
-          {hasMany && (
-            <button onClick={(e) => { e.stopPropagation(); prev(); }}
-              style={{ position: "absolute", left: "24px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", borderRadius: "50%", width: "48px", height: "48px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 101 }}>
-              <ChevronLeft size={24} />
-            </button>
-          )}
-
-          {/* Full image — stop propagation so clicking image doesn't close */}
-          <img
-            src={images[current]}
-            alt={`${project.title} ${current + 1}`}
-            onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "90vw", maxHeight: "88vh", objectFit: "contain", borderRadius: "4px", userSelect: "none" }}
-          />
-
-          {/* Next arrow */}
-          {hasMany && (
-            <button onClick={(e) => { e.stopPropagation(); next(); }}
-              style={{ position: "absolute", right: "24px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", borderRadius: "50%", width: "48px", height: "48px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 101 }}>
-              <ChevronRight size={24} />
-            </button>
-          )}
-
-          {/* Counter */}
-          {hasMany && (
-            <span style={{ position: "absolute", bottom: "24px", left: "50%", transform: "translateX(-50%)", fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.6)" }}>
-              {current + 1} / {images.length}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Top bar */}
-      <nav style={{ position: "relative", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 48px" }}>
-        <button onClick={() => navigate("/projects")}
-          style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "none", color: "#fff", cursor: "pointer", fontFamily: "'Sofia Sans Condensed', sans-serif", fontSize: "16px", letterSpacing: "0.06em", padding: 0 }}>
-          <ArrowLeft size={18} />
-          Projects
-        </button>
-        <img src={logo} alt="Logo" onClick={() => navigate("/")} style={{ width: "60px", objectFit: "contain", cursor: "pointer" }} />
-      </nav>
-
-      {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, padding: "24px 96px 64px", maxWidth: "900px", margin: "0 auto" }} className="project-view-content">
-
-        <h1 style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "clamp(24px, 4vw, 44px)", color: "#fff", textTransform: "uppercase", margin: "0 0 4px 0", textAlign: "center" }}>
-          {project.title}
-        </h1>
-        <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.6)", margin: "0 0 24px 0", textAlign: "center" }}>
-          {project.description}
-        </p>
-
-        {/* Image carousel */}
-        <div style={{ position: "relative", width: "100%", marginBottom: "32px" }}>
-          <div
-            onClick={() => images.length > 0 && setLightbox(true)}
-            style={{ width: "100%", height: "320px", backgroundColor: "rgba(255,255,255,0.12)", borderRadius: "8px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", cursor: images.length > 0 ? "zoom-in" : "default" }}>
-            {images.length > 0
-              ? <img src={images[current]} alt={`${project.title} ${current + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }} />
-              : <span style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'Archivo Narrow', sans-serif", fontSize: "14px" }}>Image here</span>
-            }
-          </div>
-
-          {/* Hint text */}
-          {images.length > 0 && (
-            <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", textAlign: "center", margin: "6px 0 0 0", letterSpacing: "0.05em" }}>
-              Click image to view full screen
-            </p>
-          )}
-
-          {/* Bottom-center nav */}
-          {hasMany && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginTop: "10px" }}>
-              <button onClick={prev}
-                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", borderRadius: "50%", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.25)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}>
-                <ChevronLeft size={18} />
-              </button>
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                {images.map((_, i) => (
-                  <div key={i} onClick={() => setCurrent(i)}
-                    style={{ width: i === current ? "20px" : "8px", height: "8px", borderRadius: "4px", backgroundColor: i === current ? "#fff" : "rgba(255,255,255,0.35)", cursor: "pointer", transition: "all 0.25s" }} />
-                ))}
-              </div>
-              <button onClick={next}
-                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", borderRadius: "50%", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.25)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}>
-                <ChevronRight size={18} />
+      {/* ── DESKTOP ── */}
+      <div className="contact-desktop" style={{ position: "relative", zIndex: 10, height: "calc(90vh - 100px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "15px", width: "min(890px, 75vw)" }} className="contact-content">
+          <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
+            <div style={{ width: "540px", height: "300px", flexShrink: 0 }}>
+              <CarouselBox height="300px" />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", maxWidth: "200px" }}>
+              <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.75)", lineHeight: "1.65", margin: 0 }}>
+                Interested in learning more about my background, experience, and projects?
+                Download my CV to view my educational background, technical skills and project experience.
+              </p>
+              <Download size={18} color="#fff" />
+              <button onClick={handleDownload} onMouseEnter={() => setDlHovered(true)} onMouseLeave={() => setDlHovered(false)}
+                style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "12px 24px", border: "2px solid #fff", backgroundColor: dlHovered ? "#000" : "#fff", color: dlHovered ? "#fff" : "#000", transition: "background-color 0.25s, color 0.25s", cursor: "pointer", width: "100%" }}>
+                Download Resume
               </button>
             </div>
-          )}
-        </div>
-
-        {/* Details */}
-        <div style={{ display: "flex", gap: "48px", flexWrap: "wrap" }} className="project-details-row">
-          <div>
-            <p style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px 0" }}>Role</p>
-            <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "15px", color: "#fff", margin: 0 }}>{project.role}</p>
           </div>
-          <div>
-            <p style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px 0" }}>Tech Stack</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {project.techStack.map(tech => (
-                <span key={tech} style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", padding: "3px 12px", borderRadius: "2px" }}>{tech}</span>
-              ))}
-            </div>
-          </div>
-          {(project.liveUrl || project.githubUrl) && (
-            <div>
-              <p style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px 0" }}>Links</p>
-              <div style={{ display: "flex", gap: "12px" }}>
-                {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", color: "#fff", textDecoration: "underline", textUnderlineOffset: "3px" }}>Live Demo</a>}
-                {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", color: "#fff", textDecoration: "underline", textUnderlineOffset: "3px" }}>GitHub</a>}
-              </div>
-            </div>
-          )}
-        </div>
 
-        <div style={{ marginTop: "28px" }}>
-          <p style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px 0" }}>Highlights</p>
-          <ul style={{ padding: "0 0 0 20px", margin: 0 }}>
-            {project.highlights.map((point, i) => (
-              <li key={i} style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.88)", lineHeight: "1.7", marginBottom: "6px" }}>{point}</li>
+          <h2 style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "clamp(28px, 3vw, 42px)", color: "#fff", textTransform: "uppercase", margin: 0, lineHeight: "1.05" }}>Let's Work Together</h2>
+
+          <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", lineHeight: "1.7", color: "rgba(255,255,255,0.85)", margin: 0, maxWidth: "620px" }}>
+            Whether you have a project in mind, an internship opportunity, or simply want to connect,
+            I'd be happy to hear from you. As a Computer Science graduate, I'm actively looking for
+            opportunities where I can apply my skills, continue learning, and contribute to meaningful
+            projects. Feel free to reach out through any of the platforms below.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: "0 16px", maxWidth: "620px" }}>
+            {[
+              { text: contactInfo.email1,    href: `mailto:${contactInfo.email1}` },
+              { text: contactInfo.github,    href: contactInfo.github },
+              { text: contactInfo.email2,    href: `mailto:${contactInfo.email2}` },
+              { text: contactInfo.linkedin,  href: contactInfo.linkedin },
+              { text: contactInfo.location,  href: undefined },
+              { text: contactInfo.jobstreet, href: contactInfo.jobstreet },
+            ].map(({ text, href }) => (
+              href
+                ? <a key={text} href={href} target="_blank" rel="noreferrer"
+                    style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.7)", textDecoration: "none", lineHeight: "2", display: "block", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}>{text}</a>
+                : <span key={text} style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.7)", lineHeight: "2", display: "block" }}>{text}</span>
             ))}
-          </ul>
+          </div>
         </div>
+      </div>
+
+      {/* ── MOBILE — everything centered ── */}
+      <div className="contact-mobile" style={{ display: "none", position: "relative", zIndex: 10, height: "calc(100vh - 80px)", overflowY: "auto", flexDirection: "column", alignItems: "center", padding: "24px 24px 48px", gap: "20px" }}>
+
+        {/* Carousel centered */}
+        <div style={{ width: "100%", maxWidth: "380px", height: "200px" }}>
+          <CarouselBox height="200px" />
+        </div>
+
+        {/* Download block centered */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", width: "100%", maxWidth: "320px", textAlign: "center" }}>
+          <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.75)", lineHeight: "1.65", margin: 0 }}>
+            Interested in learning more about my background, experience, and projects?
+            Download my CV to view my educational background, technical skills and project experience.
+          </p>
+          <Download size={18} color="#fff" />
+          <button onClick={handleDownload}
+            style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "12px 32px", border: "2px solid #fff", backgroundColor: "#fff", color: "#000", cursor: "pointer" }}>
+            Download Resume
+          </button>
+        </div>
+
+        {/* Let's Work Together centered */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", width: "100%", maxWidth: "360px", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "'Anton SC', sans-serif", fontSize: "30px", color: "#fff", textTransform: "uppercase", margin: 0, lineHeight: "1.05" }}>Let's Work Together</h2>
+          <p style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "13px", lineHeight: "1.7", color: "rgba(255,255,255,0.85)", margin: 0 }}>
+            Whether you have a project in mind, an internship opportunity, or simply want to connect,
+            I'd be happy to hear from you. As a Computer Science graduate, I'm actively looking for
+            opportunities where I can apply my skills, continue learning, and contribute to meaningful
+            projects. Feel free to reach out through any of the platforms below.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
+            {[
+              { text: contactInfo.email1,   href: `mailto:${contactInfo.email1}` },
+              { text: contactInfo.email2,   href: `mailto:${contactInfo.email2}` },
+              { text: contactInfo.location, href: undefined },
+              { text: "GitHub",             href: contactInfo.github },
+              { text: "LinkedIn",           href: contactInfo.linkedin },
+              { text: "JobStreet",          href: contactInfo.jobstreet },
+            ].map(({ text, href }) => (
+              href
+                ? <a key={text} href={href} target="_blank" rel="noreferrer"
+                    style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)", textDecoration: "none", lineHeight: "2.2" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}>{text}</a>
+                : <span key={text} style={{ fontFamily: "'Archivo Narrow', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)", lineHeight: "2.2" }}>{text}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Photo desktop only */}
+      <div style={{ position: "absolute", right: 0, bottom: 0, zIndex: 9, pointerEvents: "none", userSelect: "none" }} className="contact-photo">
+        <img src={profileImage} alt="Alexis" style={{ height: "86vh", maxHeight: "840px", display: "block", verticalAlign: "bottom" }} />
       </div>
 
       <style>{`
         @media (max-width: 768px) {
-          .project-view-content { padding: 20px 28px 48px !important; }
-          .project-details-row { flex-direction: column !important; gap: 20px !important; }
+          .contact-desktop { display: none !important; }
+          .contact-mobile  { display: flex !important; }
+          .contact-photo   { display: none !important; }
         }
-        @media (max-width: 1200px) and (min-width: 769px) {
-          .project-view-content { padding: 24px 48px 64px !important; }
+        @media (max-width: 1281px) and (min-width: 769px) {
+          .contact-content { width: min(720px, 88vw) !important; }
+          .contact-photo img { height: 70vh !important; opacity: 0.5 !important; }
         }
       `}</style>
     </section>
   );
 };
 
-export default ProjectView;
+export default Contact;

@@ -8,7 +8,7 @@ import Nav from "./nav";
 const LandingPage = () => {
   const [hovered, setHovered] = useState(false);
 
-  const handleViewResume = () => window.open("/Tolin_Resume.pdf", "_blank"); //lagay lang sa public yung resume
+  const handleViewResume = () => window.open("Tolin-Resume.pdf"); //lagay lang sa public yung resume
 
   return (
     <section style={{ position: "relative", minHeight: "100vh", backgroundImage: `url(${bg})`, backgroundSize: "cover", backgroundPosition: "center", overflow: "hidden" }}>

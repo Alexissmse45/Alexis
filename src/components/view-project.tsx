@@ -61,7 +61,7 @@ const projectDetails: Record<number, {
     githubUrl: "" },
   4: { 
       title: "BootUp", 
-      description: "A mobile game application as part of our academic project.", 
+      description: "BOOT UP! is a relaxing computer-themed puzzle game designed to introduce players to basic computer system concepts through interactive and visually engaging mini-games. The game combines entertainment and learning by allowing players to perform computer-related activities such as connecting system components, organizing motherboard parts, and fixing interface errors. Through these activities, players are introduced to simple computer concepts while enjoying a calm and pressure-free gaming experience.", 
       images: [Bootup, Bootup0, Bootup1, Bootup2, Bootup3], 
       techStack: ["React Native", "Expo"], 
       role: "Mobile Developer", 
