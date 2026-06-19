@@ -15,8 +15,8 @@ const contactInfo = {
   email2:    "alexissmse45@gmail.com",
   location:  "Tondo, Manila, Philippines",
   github:    "https://github.com/Alexissmse45",
-  linkedin:  "https://www.linkedin.com/in/alexis-tolin-a3946337/",
-  jobstreet: "https://ph.jobstreet.com/profiles/alexisreginald-tolin-4eZmJjwMHy",
+  linkedin:  "https://www.linkedin.com/in/alexis-tolin-a384b6337/",
+  jobstreet: "https://ph.jobstreet.com/profiles/alexisreginald-tolin-4sZmJjwMHy",
 };
 
 const Contact = () => {
