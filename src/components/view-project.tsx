@@ -17,6 +17,8 @@ import Thesis from "../assets/project/thesis-cert.png";
 import Thesis2 from "../assets/project/thesis1.png";
 import Thesis3 from "../assets/project/thesis2.png";
 import Thesis4 from "../assets/project/thesis3.png";
+import Thesis5 from "../assets/project/thesis1.jpeg";
+import Thesis6 from "../assets/project/thesis2.jpeg";
 import Bootup from "../assets/project/bootup..png";
 import Bootup0 from "../assets/project/bootup.png";
 import Bootup1 from "../assets/project/bootup1.png";
@@ -39,7 +41,7 @@ const projectDetails: Record<number, {
       "Developed a complete compiler pipeline including lexical, syntax, and semantic analysis.",
       "Deployed on Vercel / Railway",
     ],
-    liveUrl: "", githubUrl: "",
+    liveUrl: "https://final-celerity-compiler-q2anoz0se-alexissmse45s-projects.vercel.app/", githubUrl: "",
   },
   2: {
     title: "Kinetiq",
@@ -48,12 +50,12 @@ const projectDetails: Record<number, {
     techStack: ["PostgreSQL",],
     role: "Database Manager",
     highlights: ["Collaborated with cross-functional teams to align distribution processes with overall business requirements.", "Created and validated relational database schemas, ensuring data integrity through foreign key relationships and avoid redundancy"],
-    liveUrl: "https://final-celerity-compiler-q2anoz0se-alexissmse45s-projects.vercel.app/", githubUrl: "",
+    liveUrl: "", githubUrl: "",
   },
   3: { 
     title: "An Enhancement of Convolutional Neural Network (CNN) Algorithm Applied in First Aid Assistance System", 
     description: "An Enhancement of Convolutional Neural Network (CNN) Algorithm Applied in First Aid Assistance System is a thesis project that explores the use of artificial intelligence in assisting users with injury identification and first aid recommendations. The system utilizes an enhanced Convolutional Neural Network (CNN) model to analyze injury images and classify different types of injuries with improved accuracy. It also supports text-based descriptions to provide additional context for assessment and recommendation. Developed using Python, the research focuses on addressing common CNN limitations, improving classification performance, and incorporating confidence-based decision support to deliver more reliable first aid guidance. The project demonstrates the practical application of deep learning, machine learning, and computer vision in healthcare assistance.", 
-    images: [Thesis, Thesis2, Thesis3, Thesis4], 
+    images: [Thesis5, Thesis6, Thesis, Thesis2, Thesis3, Thesis4], 
     techStack: ["Python"], 
     role: "Backend Developer", 
     highlights: ["Developed a recommendation system that provides appropriate first aid guidance based on detected injuries."], 
